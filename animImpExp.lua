@@ -1,4 +1,3 @@
-self
 --[[
 
 	Animation to CFrame
