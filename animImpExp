@@ -40,13 +40,14 @@
 ]]--
 
 local recordTime = 10 -- How long in seconds to record you animation
-local f = "hmm.txt" -- The name of the file to write the data to and retrieve from
+local f = "hmm2.txt" -- The name of the file to write the data to and retrieve from
 
 -- DONT TOUCH ANYTHING BELOW HERE --	
 local function export()
 local anims = {}
 local a = tick()
 local conn
+local cf = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 conn = game:GetService("RunService").RenderStepped:Connect(function()
 	print('x')
 	if tick()-a >= recordTime then 
@@ -57,7 +58,7 @@ conn = game:GetService("RunService").RenderStepped:Connect(function()
 	anims[#anims+1] = {}
 	for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
 		if v:IsA("BasePart") then
-			anims[#anims][v.Name]= tostring(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame:ToObjectSpace(v.CFrame))
+			anims[#anims][v.Name] = tostring(cf:ToObjectSpace(v.CFrame))
 		end
 	end
 end)
