@@ -1,3 +1,4 @@
+self
 --[[
 
 	Animation to CFrame
