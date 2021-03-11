@@ -1,4 +1,3 @@
-nil
 --[[
 
 	Animation to CFrame
