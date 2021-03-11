@@ -30,9 +30,7 @@
 		i = i+1
 		if val[i] then
 			for i,v in pairs(val[i]) do
-				if game.Players.LocalPlayer.Character:FindFirstChild(i) then
-					game.Players.LocalPlayer.Character:FindFirstChild(i).CFrame = v
-				end
+				game.Players.LocalPlayer.Character:FindFirstChild(i).CFrame = v
 			end
 		else
 			connection:Disconnect()
@@ -67,7 +65,7 @@ end)
 end
 
 local function import()
-	local txt = readfile(f) or "[{}]"
+	local txt = (function() if isfile(filename) then return readfile(filename) else return "[{}]" end)()
 	local cf = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 	local parsed = game:GetService("HttpService"):JSONDecode(txt)
 	for i1,v1 in pairs(parsed) do
@@ -82,3 +80,22 @@ local function import()
 	print('Import Complete...')
 	return parsed
 end
+
+	for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+		if v:IsA("Motor6D") then v.Enabled = false end
+	end 
+	local i = 0
+	local val = import()
+	local connection
+	connection = game:GetService("RunService").RenderStepped:Connect(function() -- We use render stepped because the animation is recorded using RenderStepped, so it is best to run it the same way
+		i = i+1
+		if val[i] then
+			for i,v in pairs(val[i]) do
+				if game.Players.LocalPlayer.Character:FindFirstChild(i) then
+				game.Players.LocalPlayer.Character:FindFirstChild(i).CFrame = v
+			end
+			end
+		else
+			connection:Disconnect()
+		end
+	end)
