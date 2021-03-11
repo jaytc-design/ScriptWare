@@ -40,7 +40,7 @@
 ]]--
 
 local recordTime = 10 -- How long in seconds to record you animation
-local f = "hmm2.txt" -- The name of the file to write the data to and retrieve from
+local filename = "hmm.txt" -- The name of the file to write the data to and retrieve from
 
 -- DONT TOUCH ANYTHING BELOW HERE --	
 local function export()
@@ -65,7 +65,7 @@ end)
 end
 
 local function import()
-	local txt = (function() if isfile(filename) then return readfile(filename) else return "[{}]" end)()
+	local txt = readfile(filename)
 	local cf = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
 	local parsed = game:GetService("HttpService"):JSONDecode(txt)
 	for i1,v1 in pairs(parsed) do
@@ -81,9 +81,7 @@ local function import()
 	return parsed
 end
 
-	for i,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-		if v:IsA("Motor6D") then v.Enabled = false end
-	end 
+	
 	local i = 0
 	local val = import()
 	local connection
@@ -91,9 +89,7 @@ end
 		i = i+1
 		if val[i] then
 			for i,v in pairs(val[i]) do
-				if game.Players.LocalPlayer.Character:FindFirstChild(i) then
 				game.Players.LocalPlayer.Character:FindFirstChild(i).CFrame = v
-			end
 			end
 		else
 			connection:Disconnect()
