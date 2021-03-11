@@ -30,7 +30,9 @@
 		i = i+1
 		if val[i] then
 			for i,v in pairs(val[i]) do
-				game.Players.LocalPlayer.Character:FindFirstChild(i).CFrame = v
+				if game.Players.LocalPlayer.Character:FindFirstChild(i) then
+					game.Players.LocalPlayer.Character:FindFirstChild(i).CFrame = v
+				end
 			end
 		else
 			connection:Disconnect()
